@@ -1,16 +1,11 @@
 # flutter_word_manager
 
-A Flutter project to collect and manage words for crossword like games
+A Flutter project to collect and manage words for crossword like games with clean architecture
+you can import words from file and curd operation by using bloc and hive database.
 
-## Getting Started
+screenshots:
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+| | |
+|:---:|:---:|
+|![Screenshot_20220717_144446](https://user-images.githubusercontent.com/38333877/179394277-e6f24ad8-8fbe-4251-a6ab-6d5f5b4dad7f.png)|![Screenshot_20220717_144257](https://user-images.githubusercontent.com/38333877/179394288-957445fc-87c9-4c98-bfa8-c712a8b59957.png)|
+|![Screenshot_20220717_144336](https://user-images.githubusercontent.com/38333877/179394295-8ad7a66d-2609-4efc-a40d-d73c05103481.png)|![Screenshot_20220717_144509](https://user-images.githubusercontent.com/38333877/179394285-c933a993-1956-4c15-8e89-b2cf68df2cee.png)|

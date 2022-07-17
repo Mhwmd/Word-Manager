@@ -35,7 +35,7 @@ class WordManagerBloc extends Bloc<WordManagerEvent, WordManagerState> {
   Future<void> _onSubscriptionRequested(WordManagerSubscriptionRequested event, Emitter<WordManagerState> emit) async {
     emit(state.copyWith(status: WordManagerStatus.loading));
     await emit.forEach<WordEntries>(
-      _wordStorageRepository.getWords(),
+      _wordStorageRepository.stream,
       onData: (words) => state.copyWith(status: WordManagerStatus.success, words: words),
       onError: (_, __) => state.copyWith(status: WordManagerStatus.failure),
     );

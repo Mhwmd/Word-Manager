@@ -4,7 +4,7 @@ import 'types/types.dart';
 abstract class WordStorageApi {
   const WordStorageApi();
 
-  Stream<WordEntries> getWords();
+  Stream<WordEntries> get stream;
 
   WordEntry get(String id);
 

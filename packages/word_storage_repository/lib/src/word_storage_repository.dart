@@ -6,7 +6,7 @@ class WordStorageRepository {
 
   WordEntry get(String id) => _wordStorageApi.get(id);
 
-  Stream<WordEntries> getWords() => _wordStorageApi.getWords();
+  Stream<WordEntries> get stream => _wordStorageApi.stream;
 
   Future<void> save(WordEntry word) => _wordStorageApi.save(word);
 

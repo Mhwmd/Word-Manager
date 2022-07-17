@@ -26,7 +26,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
   Future<void> _onSubscriptionRequested(StatsSubscriptionRequested event, Emitter<StatsState> emit) async {
     emit(state.copyWith(status: StatsStatus.loading));
     await emit.forEach<WordEntries>(
-      _wordStorageRepository.getWords(),
+      _wordStorageRepository.stream,
       onData: (words) => state.copyWith(
         status: StatsStatus.success,
         wordsCount: words.length,

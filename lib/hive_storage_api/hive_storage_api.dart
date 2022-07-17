@@ -34,7 +34,7 @@ class HiveStorageApi extends WordStorageApi {
   }
 
   @override
-  Stream<List<WordEntry>> getWords() {
+  Stream<List<WordEntry>> get stream {
     return _streamBehavior.asBroadcastStream();
   }
 

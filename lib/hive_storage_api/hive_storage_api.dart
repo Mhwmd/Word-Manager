@@ -25,9 +25,10 @@ class HiveStorageApi extends WordStorageApi {
     box = await Hive.openBox<WordEntry>(kBoxName);
     isBoxInitialized = box.isOpen;
 
-    _streamBehavior.add(box.values.toList());
+    _streamBehavior.add(_words);
   }
 
+  // TODO: use iterable directly
   WordEntries get _words => box.values.toList();
 
   @override

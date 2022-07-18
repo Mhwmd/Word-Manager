@@ -34,10 +34,10 @@ class WordEntryAdapter extends TypeAdapter<WordEntry> {
       ..write(obj.wordStatus);
   }
 
-// @override
-// int get hashCode => typeId.hashCode;
-//
-// @override
-// bool operator ==(Object other) =>
-//     identical(this, other) || other is WordEntryAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is WordEntryAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }

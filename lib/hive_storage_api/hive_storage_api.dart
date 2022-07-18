@@ -4,53 +4,56 @@ import 'package:hive/hive.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:word_storage_api/word_storage_api.dart';
 
+import 'adapters/adapters.dart';
+
 class HiveStorageApi extends WordStorageApi {
   HiveStorageApi() {
     _init();
   }
 
-  static const String kBoxName = "words";
-  final BehaviorSubject<List<WordEntry>> _streamBehavior = BehaviorSubject<List<WordEntry>>.seeded(const []);
+  static const String kBoxName = "word_box";
+
+  final BehaviorSubject<WordEntries> _streamBehavior = BehaviorSubject.seeded(const []);
   bool isBoxInitialized = false;
-  late Box box;
+  late Box<WordEntry> box;
 
   Future<void> _init() async {
-    box = await Hive.openBox(kBoxName);
+    Hive.registerAdapter(DifficultyLevelAdapter());
+    Hive.registerAdapter(WordStatusAdapter());
+    Hive.registerAdapter(WordEntryAdapter());
+
+    box = await Hive.openBox<WordEntry>(kBoxName);
     isBoxInitialized = box.isOpen;
 
-    _streamBehavior.add(_wordEntries);
+    _streamBehavior.add(box.values.toList());
   }
 
-  List<WordEntry> get _wordEntries {
-    return box.values.map((jsonMap) {
-      return WordEntry.fromJson(JsonMap.from(jsonMap));
-    }).toList();
-  }
+  WordEntries get _words => box.values.toList();
 
   @override
   WordEntry get(String id) {
     if (!box.containsKey(id)) throw WordIdNotExists();
-    return WordEntry.fromJson(JsonMap.from(box.get(id)!));
+    return box.get(id)!;
   }
 
   @override
-  Stream<List<WordEntry>> get stream {
+  Stream<WordEntries> get stream {
     return _streamBehavior.asBroadcastStream();
   }
 
   @override
   Future<void> save(WordEntry word) async {
-    await box.put(word.id, word.toJson());
-    _streamBehavior.add(_wordEntries);
+    await box.put(word.id, word);
+    _streamBehavior.add(_words);
   }
 
   @override
   Future<WordEntry> remove(String id) async {
     if (!box.containsKey(id)) throw WordIdNotExists();
-    WordEntry word = WordEntry.fromJson(JsonMap.from(box.get(id)!));
+    WordEntry word = box.get(id)!;
 
     await box.delete(id);
-    _streamBehavior.add(_wordEntries);
+    _streamBehavior.add(_words);
     return word;
   }
 
@@ -62,14 +65,15 @@ class HiveStorageApi extends WordStorageApi {
     } else {
       await box.clear();
     }
-    _streamBehavior.add(_wordEntries);
+    _streamBehavior.add(_words);
   }
 
   @override
   Future<void> saveAll(WordEntries words) async {
     if (words.isEmpty) return;
-    await box.putAll({for (var word in words) word.id: word.toJson()});
-    _streamBehavior.add(_wordEntries);
+    await box.putAll({for (var word in words) word.id: word});
+
+    _streamBehavior.add(_words);
   }
 }
 

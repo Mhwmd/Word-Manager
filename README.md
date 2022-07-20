@@ -1,4 +1,4 @@
-# flutter_word_manager
+# flutter word manager
 
 A Flutter project to collect and manage words for crossword like games with clean architecture
 you can import words from file and curd operation by using bloc and hive database.
